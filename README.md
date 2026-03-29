@@ -1,8 +1,11 @@
-# Домашнее задание к занятию "`SQL. Часть 1`" - `Пономарев Денис`
+# Домашнее задание к занятию "`SQL. Часть 2`" - `Пономарев Денис`
 
 ### Задание 1
 
-Получите уникальные названия районов из таблицы с адресами, которые начинаются на “K” и заканчиваются на “a” и не содержат пробелов.
+Одним запросом получите информацию о магазине, в котором обслуживается более 300 покупателей, и выведите в результат следующую информацию:
+- фамилия и имя сотрудника из этого магазина;
+- город нахождения магазина;
+- количество пользователей, закреплённых в этом магазине.
 
 ```
 SELECT DISTINCT district
@@ -12,20 +15,11 @@ WHERE district LIKE 'K%a'
 
 ```
 
-```
-Kanagawa
-Kalmykia
-Kaduna
-Karnataka
-Kütahya
-Kerala
-Kitaa
-
-```
+![Задание1](https://github.com/ddponomarev/11_4/blob/master/img/z1.png)
 
 ### Задание 2
 
-Получите из таблицы платежей за прокат фильмов информацию по платежам, которые выполнялись в промежуток с 15 июня 2005 года по 18 июня 2005 года **включительно** и стоимость которых превышает 10.00.
+Получите количество фильмов, продолжительность которых больше средней продолжительности всех фильмов.
 
 ```
 SELECT *
@@ -35,20 +29,11 @@ WHERE DATE(payment_date) BETWEEN '2005-06-15' AND '2005-06-18'
 
 ```
 
-```
-908	33	1	1301	10.99	2005-06-15 09:46:33	2006-02-15 22:12:36
-7017	260	1	2091	10.99	2005-06-17 18:09:04	2006-02-15 22:14:58
-8272	305	1	2166	11.99	2005-06-17 23:51:21	2006-02-15 22:15:47
-12888	477	1	2306	10.99	2005-06-18 08:33:23	2006-02-15 22:19:46
-13892	516	1	1718	10.99	2005-06-16 14:52:02	2006-02-15 22:20:47
-14620	544	2	1434	10.99	2005-06-15 18:30:46	2006-02-15 22:21:35
-15313	572	2	1889	10.99	2005-06-17 04:05:12	2006-02-15 22:22:22
-
-```
+![Задание2](https://github.com/ddponomarev/11_4/blob/master/img/z2.png)
 
 ### Задание 3
 
-Получите последние пять аренд фильмов.
+Получите информацию, за какой месяц была получена наибольшая сумма платежей, и добавьте информацию по количеству аренд за этот месяц.
 
 ```
 SELECT *
@@ -58,22 +43,14 @@ LIMIT 5;
 
 ```
 
-```
-11739	2006-02-14 15:16:03	4568	373		2	2006-02-15 21:30:53
-14616	2006-02-14 15:16:03	4537	532		1	2006-02-15 21:30:53
-11676	2006-02-14 15:16:03	4496	216		2	2006-02-15 21:30:53
-15966	2006-02-14 15:16:03	4472	374		1	2006-02-15 21:30:53
-13486	2006-02-14 15:16:03	4460	274		1	2006-02-15 21:30:53
+![Задание3](https://github.com/ddponomarev/11_4/blob/master/img/z3.png)
 
-```
+## Дополнительные задания (со звёздочкой*)
+Эти задания дополнительные, то есть не обязательные к выполнению, и никак не повлияют на получение вами зачёта по этому домашнему заданию. Вы можете их выполнить, если хотите глубже шире разобраться в материале.
 
-### Задание 4
+### Задание 4*
 
-Одним запросом получите активных покупателей, имена которых Kelly или Willie.
-
-Сформируйте вывод в результат таким образом:
-- все буквы в фамилии и имени из верхнего регистра переведите в нижний регистр,
-- замените буквы 'll' в именах на 'pp'
+Посчитайте количество продаж, выполненных каждым продавцом. Добавьте вычисляемую колонку «Премия». Если количество продаж превышает 8000, то значение в колонке будет «Да», иначе должно быть значение «Нет».
 
 ```
 SELECT
@@ -86,20 +63,11 @@ WHERE active = 1
 
 ```
 
-```
-kelly	torres	keppy
-willie	howell	wippie
-willie	markham	wippie
-kelly	knott	keppy
-
-```
-
-## Дополнительные задания (со звёздочкой*)
-Эти задания дополнительные, то есть не обязательные к выполнению, и никак не повлияют на получение вами зачёта по этому домашнему заданию. Вы можете их выполнить, если хотите глубже шире разобраться в материале.
+![Задание4](https://github.com/ddponomarev/11_4/blob/master/img/z4.png)
 
 ### Задание 5*
 
-Выведите Email каждого покупателя, разделив значение Email на две отдельных колонки: в первой колонке должно быть значение, указанное до @, во второй — значение, указанное после @.
+Найдите фильмы, которые ни разу не брали в аренду.
 
 ```
 SELECT
@@ -109,72 +77,4 @@ SELECT
 FROM customer;
 ```
 
-```
-MARY.SMITH@sakilacustomer.org	MARY.SMITH	sakilacustomer.org
-PATRICIA.JOHNSON@sakilacustomer.org	PATRICIA.JOHNSON	sakilacustomer.org
-LINDA.WILLIAMS@sakilacustomer.org	LINDA.WILLIAMS	sakilacustomer.org
-BARBARA.JONES@sakilacustomer.org	BARBARA.JONES	sakilacustomer.org
-ELIZABETH.BROWN@sakilacustomer.org	ELIZABETH.BROWN	sakilacustomer.org
-JENNIFER.DAVIS@sakilacustomer.org	JENNIFER.DAVIS	sakilacustomer.org
-MARIA.MILLER@sakilacustomer.org	MARIA.MILLER	sakilacustomer.org
-SUSAN.WILSON@sakilacustomer.org	SUSAN.WILSON	sakilacustomer.org
-MARGARET.MOORE@sakilacustomer.org	MARGARET.MOORE	sakilacustomer.org
-DOROTHY.TAYLOR@sakilacustomer.org	DOROTHY.TAYLOR	sakilacustomer.org
-LISA.ANDERSON@sakilacustomer.org	LISA.ANDERSON	sakilacustomer.org
-NANCY.THOMAS@sakilacustomer.org	NANCY.THOMAS	sakilacustomer.org
-KAREN.JACKSON@sakilacustomer.org	KAREN.JACKSON	sakilacustomer.org
-BETTY.WHITE@sakilacustomer.org	BETTY.WHITE	sakilacustomer.org
-HELEN.HARRIS@sakilacustomer.org	HELEN.HARRIS	sakilacustomer.org
-```
-### Задание 6*
-
-Доработайте запрос из предыдущего задания, скорректируйте значения в новых колонках: первая буква должна быть заглавной, остальные — строчными.
-
-```
-SELECT
-    email,
-    CONCAT(
-        UPPER(LEFT(SUBSTRING_INDEX(email, '@', 1), 1)),
-        LOWER(SUBSTRING(SUBSTRING_INDEX(email, '@', 1), 2))
-    ) AS email_local_part,
-    CONCAT(
-        UPPER(LEFT(SUBSTRING_INDEX(email, '@', -1), 1)),
-        LOWER(SUBSTRING(SUBSTRING_INDEX(email, '@', -1), 2))
-    ) AS email_domain
-FROM customer;
-
-```
-
-```
-MARY.SMITH@sakilacustomer.org	Mary.smith	Sakilacustomer.org
-PATRICIA.JOHNSON@sakilacustomer.org	Patricia.johnson	Sakilacustomer.org
-LINDA.WILLIAMS@sakilacustomer.org	Linda.williams	Sakilacustomer.org
-BARBARA.JONES@sakilacustomer.org	Barbara.jones	Sakilacustomer.org
-ELIZABETH.BROWN@sakilacustomer.org	Elizabeth.brown	Sakilacustomer.org
-JENNIFER.DAVIS@sakilacustomer.org	Jennifer.davis	Sakilacustomer.org
-MARIA.MILLER@sakilacustomer.org	Maria.miller	Sakilacustomer.org
-SUSAN.WILSON@sakilacustomer.org	Susan.wilson	Sakilacustomer.org
-MARGARET.MOORE@sakilacustomer.org	Margaret.moore	Sakilacustomer.org
-DOROTHY.TAYLOR@sakilacustomer.org	Dorothy.taylor	Sakilacustomer.org
-LISA.ANDERSON@sakilacustomer.org	Lisa.anderson	Sakilacustomer.org
-NANCY.THOMAS@sakilacustomer.org	Nancy.thomas	Sakilacustomer.org
-KAREN.JACKSON@sakilacustomer.org	Karen.jackson	Sakilacustomer.org
-BETTY.WHITE@sakilacustomer.org	Betty.white	Sakilacustomer.org
-HELEN.HARRIS@sakilacustomer.org	Helen.harris	Sakilacustomer.org
-SANDRA.MARTIN@sakilacustomer.org	Sandra.martin	Sakilacustomer.org
-DONNA.THOMPSON@sakilacustomer.org	Donna.thompson	Sakilacustomer.org
-CAROL.GARCIA@sakilacustomer.org	Carol.garcia	Sakilacustomer.org
-RUTH.MARTINEZ@sakilacustomer.org	Ruth.martinez	Sakilacustomer.org
-SHARON.ROBINSON@sakilacustomer.org	Sharon.robinson	Sakilacustomer.org
-MICHELLE.CLARK@sakilacustomer.org	Michelle.clark	Sakilacustomer.org
-LAURA.RODRIGUEZ@sakilacustomer.org	Laura.rodriguez	Sakilacustomer.org
-SARAH.LEWIS@sakilacustomer.org	Sarah.lewis	Sakilacustomer.org
-KIMBERLY.LEE@sakilacustomer.org	Kimberly.lee	Sakilacustomer.org
-DEBORAH.WALKER@sakilacustomer.org	Deborah.walker	Sakilacustomer.org
-JESSICA.HALL@sakilacustomer.org	Jessica.hall	Sakilacustomer.org
-SHIRLEY.ALLEN@sakilacustomer.org	Shirley.allen	Sakilacustomer.org
-CYNTHIA.YOUNG@sakilacustomer.org	Cynthia.young	Sakilacustomer.org
-ANGELA.HERNANDEZ@sakilacustomer.org	Angela.hernandez	Sakilacustomer.org
-MELISSA.KING@sakilacustomer.org	Melissa.king	Sakilacustomer.org
-
-```
+![Задание5](https://github.com/ddponomarev/11_4/blob/master/img/z5.png)
