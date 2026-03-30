@@ -21,7 +21,6 @@ GROUP BY s.staff_id, s.first_name, s.last_name, cm.city
 HAVING COUNT(c.customer_id) > 300;
 
 ```
-
 ![Задание1](https://github.com/ddponomarev/11_4/blob/master/img/z1.png)
 
 ### Задание 2
@@ -29,13 +28,11 @@ HAVING COUNT(c.customer_id) > 300;
 Получите количество фильмов, продолжительность которых больше средней продолжительности всех фильмов.
 
 ```
-SELECT *
-FROM payment
-WHERE DATE(payment_date) BETWEEN '2005-06-15' AND '2005-06-18'
-  AND amount > 10.00;
+SELECT COUNT(*) AS "кол-во фильмов"
+FROM film
+WHERE length > (SELECT AVG(length) FROM film);
 
 ```
-
 ![Задание2](https://github.com/ddponomarev/11_4/blob/master/img/z2.png)
 
 ### Задание 3
@@ -43,10 +40,14 @@ WHERE DATE(payment_date) BETWEEN '2005-06-15' AND '2005-06-18'
 Получите информацию, за какой месяц была получена наибольшая сумма платежей, и добавьте информацию по количеству аренд за этот месяц.
 
 ```
-SELECT *
-FROM rental
-ORDER BY rental_date DESC
-LIMIT 5;
+SELECT
+    DATE_FORMAT(payment_date, '%Y.%m') AS "Месяц",
+    SUM(amount) AS "Сумма платежей",
+    COUNT(rental_id) AS "Кол-во аренд"
+FROM payment
+GROUP BY DATE_FORMAT(payment_date, '%Y.%m')
+ORDER BY SUM(amount) DESC
+LIMIT 1;
 
 ```
 
@@ -61,12 +62,16 @@ LIMIT 5;
 
 ```
 SELECT
-    LOWER(first_name),
-    LOWER(last_name),
-    REPLACE(LOWER(first_name), 'll', 'pp')
-FROM customer
-WHERE active = 1
-  AND first_name IN ('Kelly', 'Willie');
+    s.staff_id,
+    CONCAT(s.first_name, ' ', s.last_name) AS "Сотрудники",
+    COUNT(p.payment_id) AS "Кол-во продаж",
+    CASE
+        WHEN COUNT(p.payment_id) > 8000 THEN "Да"
+        ELSE "Нет"
+    END AS "Премия"
+FROM staff s
+JOIN payment p ON s.staff_id = p.staff_id
+GROUP BY s.staff_id, s.first_name, s.last_name;
 
 ```
 
@@ -77,11 +82,12 @@ WHERE active = 1
 Найдите фильмы, которые ни разу не брали в аренду.
 
 ```
-SELECT
-    email,
-    SUBSTRING_INDEX(email, '@', 1) AS email_local_part,
-    SUBSTRING_INDEX(email, '@', -1) AS email_domain
-FROM customer;
+SELECT f.title
+FROM film f
+WHERE f.film_id NOT IN (
+    SELECT DISTINCT i.film_id
+    FROM inventory i
+    JOIN rental r ON i.inventory_id = r.inventory_id);
 ```
 
 ![Задание5](https://github.com/ddponomarev/11_4/blob/master/img/z5.png)
