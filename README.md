@@ -8,10 +8,17 @@
 - количество пользователей, закреплённых в этом магазине.
 
 ```
-SELECT DISTINCT district
-FROM address
-WHERE district LIKE 'K%a'
-  AND district NOT LIKE '% %';
+SELECT
+    CONCAT(s.first_name, ' ', s.last_name) AS "Сотрудник магазина",
+    cm.city AS "Город магазина",
+    COUNT(c.customer_id) AS "Кол-во пользователей"
+FROM staff s
+JOIN store st ON st.manager_staff_id = s.staff_id
+JOIN address a ON st.address_id = a.address_id
+JOIN city cm ON a.city_id = cm.city_id
+JOIN customer c ON c.store_id = st.store_id
+GROUP BY s.staff_id, s.first_name, s.last_name, cm.city
+HAVING COUNT(c.customer_id) > 300;
 
 ```
 
